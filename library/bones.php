@@ -54,31 +54,31 @@ function bones_head_cleanup() {
 // A better title
 // http://www.deluxeblogtips.com/2012/03/better-title-meta-tag.html
 function rw_title( $title, $sep, $seplocation ) {
-  global $page, $paged;
+	global $page, $paged;
 
-  // Don't affect in feeds.
-  if ( is_feed() ) return $title;
+	// Don't affect in feeds.
+	if ( is_feed() ) return $title;
 
-  // Add the blog's name
-  if ( 'right' == $seplocation ) {
-    $title .= get_bloginfo( 'name' );
-  } else {
-    $title = get_bloginfo( 'name' ) . $title;
-  }
+	// Add the blog's name
+	if ( 'right' == $seplocation ) {
+		$title .= get_bloginfo( 'name' );
+	} else {
+		$title = get_bloginfo( 'name' ) . $title;
+	}
 
-  // Add the blog description for the home/front page.
-  $site_description = get_bloginfo( 'description', 'display' );
+	// Add the blog description for the home/front page.
+	$site_description = get_bloginfo( 'description', 'display' );
 
-  if ( $site_description && ( is_home() || is_front_page() ) ) {
-    $title .= " {$sep} {$site_description}";
-  }
+	if ( $site_description && ( is_home() || is_front_page() ) ) {
+		$title .= " {$sep} {$site_description}";
+	}
 
-  // Add a page number if necessary:
-  if ( $paged >= 2 || $page >= 2 ) {
-    $title .= " {$sep} " . sprintf( __( 'Page %s', 'dbt' ), max( $paged, $page ) );
-  }
+	// Add a page number if necessary:
+	if ( $paged >= 2 || $page >= 2 ) {
+		$title .= " {$sep} " . sprintf( __( 'Page %s', 'dbt' ), max( $paged, $page ) );
+	}
 
-  return $title;
+	return $title;
 
 } // end better title
 
@@ -120,9 +120,9 @@ SCRIPTS & ENQUEUEING
 // loading modernizr and jquery, and reply script
 function bones_scripts_and_styles() {
 
-  global $wp_styles; // call global $wp_styles variable to add conditional wrapper around ie stylesheet the WordPress way
+	global $wp_styles; // call global $wp_styles variable to add conditional wrapper around ie stylesheet the WordPress way
 
-  if (!is_admin()) {
+	if (!is_admin()) {
 
 		// modernizr (without media query polyfill)
 		wp_register_script( 'bones-modernizr', get_stylesheet_directory_uri() . '/library/js/libs/modernizr.custom.min.js', array(), '2.5.3', false );
@@ -133,10 +133,10 @@ function bones_scripts_and_styles() {
 		// ie-only style sheet
 		wp_register_style( 'bones-ie-only', get_stylesheet_directory_uri() . '/library/css/ie.css', array(), '' );
 
-    // comment reply script for threaded comments
-    if ( is_singular() AND comments_open() AND (get_option('thread_comments') == 1)) {
-		  wp_enqueue_script( 'comment-reply' );
-    }
+		// comment reply script for threaded comments
+		if ( is_singular() AND comments_open() AND (get_option('thread_comments') == 1)) {
+			wp_enqueue_script( 'comment-reply' );
+		}
 
 		//adding scripts file in the footer
 		wp_register_script( 'bones-js', get_stylesheet_directory_uri() . '/library/js/scripts.js', array( 'jquery' ), '', true );
@@ -174,13 +174,13 @@ function bones_theme_support() {
 
 	// wp custom background (thx to @bransonwerner for update)
 	add_theme_support( 'custom-background',
-	    array(
-	    'default-image' => '',    // background image default
-	    'default-color' => '',    // background color default (dont add the #)
-	    'wp-head-callback' => '_custom_background_cb',
-	    'admin-head-callback' => '',
-	    'admin-preview-callback' => ''
-	    )
+		array(
+			'default-image' => '',    // background image default
+			'default-color' => '',    // background color default (dont add the #)
+			'wp-head-callback' => '_custom_background_cb',
+			'admin-head-callback' => '',
+			'admin-preview-callback' => ''
+		)
 	);
 
 	// rss thingy
@@ -261,23 +261,23 @@ PAGE NAVI
 
 // Numeric Page Navi (built into the theme by default)
 function bones_page_navi() {
-  global $wp_query;
-  $bignum = 999999999;
-  if ( $wp_query->max_num_pages <= 1 )
-    return;
-  echo '<nav class="pagination">';
-  echo paginate_links( array(
-    'base'         => str_replace( $bignum, '%#%', esc_url( get_pagenum_link($bignum) ) ),
-    'format'       => '',
-    'current'      => max( 1, get_query_var('paged') ),
-    'total'        => $wp_query->max_num_pages,
-    'prev_text'    => '&larr;',
-    'next_text'    => '&rarr;',
-    'type'         => 'list',
-    'end_size'     => 3,
-    'mid_size'     => 3
-  ) );
-  echo '</nav>';
+	global $wp_query;
+	$bignum = 999999999;
+	if ( $wp_query->max_num_pages <= 1 )
+		return;
+	echo '<nav class="pagination">';
+	echo paginate_links( array(
+		'base'         => str_replace( $bignum, '%#%', esc_url( get_pagenum_link($bignum) ) ),
+		'format'       => '',
+		'current'      => max( 1, get_query_var('paged') ),
+		'total'        => $wp_query->max_num_pages,
+		'prev_text'    => '&larr;',
+		'next_text'    => '&rarr;',
+		'type'         => 'list',
+		'end_size'     => 3,
+		'mid_size'     => 2
+	) );
+	echo '</nav>';
 } /* end page navi */
 
 /*********************
